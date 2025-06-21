@@ -16,7 +16,7 @@ const contactForm = document.getElementById('contact-form');
 const navLinks = document.querySelectorAll('.nav-link');
 
 // Initialize the app
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeTheme();
     initializeNavigation();
     initializeTypingAnimation();
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeTheme() {
     document.documentElement.setAttribute('data-theme', currentTheme);
     updateThemeIcon();
-    
+
     if (themeToggle) {
         themeToggle.addEventListener('click', toggleTheme);
     }
@@ -42,7 +42,7 @@ function toggleTheme() {
     document.documentElement.setAttribute('data-theme', currentTheme);
     localStorage.setItem('theme', currentTheme);
     updateThemeIcon();
-    
+
     // Add theme transition effect
     document.body.style.transition = 'all 0.5s ease';
     setTimeout(() => {
@@ -66,7 +66,7 @@ function initializeNavigation() {
     if (navToggle) {
         navToggle.addEventListener('click', toggleMobileMenu);
     }
-    
+
     // Close mobile menu when clicking on links
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -76,10 +76,10 @@ function initializeNavigation() {
             updateActiveLink(link);
         });
     });
-    
+
     // Navbar scroll effect
     window.addEventListener('scroll', handleNavbarScroll);
-    
+
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -93,7 +93,7 @@ function initializeNavigation() {
             }
         });
     });
-    
+
     // Update active link on scroll
     window.addEventListener('scroll', updateActiveNavLink);
 }
@@ -102,7 +102,7 @@ function toggleMobileMenu() {
     if (navMenu) {
         navMenu.classList.toggle('active');
     }
-    
+
     // Animate hamburger menu
     if (navToggle) {
         const spans = navToggle.querySelectorAll('span');
@@ -121,13 +121,13 @@ function toggleMobileMenu() {
 function handleNavbarScroll() {
     if (navbar) {
         if (window.scrollY > 100) {
-            navbar.style.background = currentTheme === 'light' 
-                ? 'rgba(255, 255, 255, 0.95)' 
+            navbar.style.background = currentTheme === 'light'
+                ? 'rgba(255, 255, 255, 0.95)'
                 : 'rgba(17, 24, 39, 0.95)';
             navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
         } else {
-            navbar.style.background = currentTheme === 'light' 
-                ? 'rgba(255, 255, 255, 0.9)' 
+            navbar.style.background = currentTheme === 'light'
+                ? 'rgba(255, 255, 255, 0.9)'
                 : 'rgba(17, 24, 39, 0.9)';
             navbar.style.boxShadow = 'none';
         }
@@ -142,12 +142,12 @@ function updateActiveLink(activeLink) {
 function updateActiveNavLink() {
     const sections = document.querySelectorAll('section');
     const scrollPos = window.scrollY + 100;
-    
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const sectionId = section.getAttribute('id');
-        
+
         if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
             navLinks.forEach(link => link.classList.remove('active'));
             const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
@@ -161,10 +161,10 @@ function updateActiveNavLink() {
 // Typing Animation
 function initializeTypingAnimation() {
     if (!typingElement) return;
-    
+
     function typeText() {
         const currentText = typingText[currentIndex];
-        
+
         if (isDeleting) {
             typingElement.textContent = currentText.substring(0, charIndex - 1);
             charIndex--;
@@ -172,9 +172,9 @@ function initializeTypingAnimation() {
             typingElement.textContent = currentText.substring(0, charIndex + 1);
             charIndex++;
         }
-        
+
         let typeSpeed = isDeleting ? 50 : 100;
-        
+
         if (!isDeleting && charIndex === currentText.length) {
             typeSpeed = 2000; // Pause at end
             isDeleting = true;
@@ -183,10 +183,10 @@ function initializeTypingAnimation() {
             currentIndex = (currentIndex + 1) % typingText.length;
             typeSpeed = 500; // Pause before starting new word
         }
-        
+
         setTimeout(typeText, typeSpeed);
     }
-    
+
     typeText();
 }
 
@@ -196,7 +196,7 @@ function initializeScrollAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -204,19 +204,19 @@ function initializeScrollAnimations() {
             }
         });
     }, observerOptions);
-    
+
     // Observe elements for animation
     const animatedElements = document.querySelectorAll(
         '.project-card, .skill-category, .contact-card, .about-content, .hero-stats'
     );
-    
+
     animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'all 0.6s ease';
         observer.observe(el);
     });
-    
+
     // Add CSS for animation
     const style = document.createElement('style');
     style.textContent = `
@@ -231,11 +231,11 @@ function initializeScrollAnimations() {
 // Skill Bars Animation
 function initializeSkillBars() {
     const skillBars = document.querySelectorAll('.skill-progress');
-    
+
     const observerOptions = {
         threshold: 0.5
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -245,7 +245,7 @@ function initializeSkillBars() {
             }
         });
     }, observerOptions);
-    
+
     skillBars.forEach(bar => {
         bar.style.width = '0%';
         observer.observe(bar);
@@ -255,18 +255,18 @@ function initializeSkillBars() {
 // Counter Animation
 function initializeCounters() {
     const counters = document.querySelectorAll('.stat-number');
-    
+
     const observerOptions = {
         threshold: 0.5
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const counter = entry.target;
                 const target = parseInt(counter.getAttribute('data-count'));
                 let current = 0;
-                
+
                 const increment = target / 100;
                 const timer = setInterval(() => {
                     current += increment;
@@ -276,40 +276,60 @@ function initializeCounters() {
                     }
                     counter.textContent = Math.floor(current);
                 }, 20);
-                
+
                 observer.unobserve(counter);
             }
         });
     }, observerOptions);
-    
+
     counters.forEach(counter => observer.observe(counter));
 }
 
 // Contact Form
 function initializeContactForm() {
+    const contactForm = document.getElementById("contact-form");
     if (!contactForm) return;
-    
-    contactForm.addEventListener('submit', function(e) {
+
+    contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        
+
         const formData = new FormData(contactForm);
         const formValues = Object.fromEntries(formData.entries());
-        
+
         // Validate form
         if (validateForm(formValues)) {
-            showMessage('Thank you! Your message has been sent successfully.', 'success');
-            contactForm.reset();
+            // 🔽 Send form data to Formspree
+            fetch("https://formspree.io/f/mpwrjyvg", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json"
+                },
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        showMessage('✅ Thank you! Your message has been sent successfully.', 'success');
+                        contactForm.reset();
+                    } else {
+                        response.json().then(data => {
+                            showMessage('❌ ' + (data.errors?.[0]?.message || 'Failed to send message.'), 'error');
+                        });
+                    }
+                })
+                .catch(error => {
+                    showMessage('❌ Network error: ' + error.message, 'error');
+                });
         }
     });
-    
+
     // Real-time validation
     const inputs = contactForm.querySelectorAll('input, textarea');
     inputs.forEach(input => {
-        input.addEventListener('blur', function() {
+        input.addEventListener('blur', function () {
             validateField(this);
         });
-        
-        input.addEventListener('input', function() {
+
+        input.addEventListener('input', function () {
             if (this.classList.contains('error')) {
                 validateField(this);
             }
@@ -319,7 +339,7 @@ function initializeContactForm() {
 
 function validateForm(values) {
     let isValid = true;
-    
+
     // Name validation
     if (!values.name || values.name.trim().length < 2) {
         showFieldError('name', 'Name must be at least 2 characters long');
@@ -327,7 +347,7 @@ function validateForm(values) {
     } else {
         clearFieldError('name');
     }
-    
+
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!values.email || !emailRegex.test(values.email)) {
@@ -336,7 +356,7 @@ function validateForm(values) {
     } else {
         clearFieldError('email');
     }
-    
+
     // Subject validation
     if (!values.subject || values.subject.trim().length < 3) {
         showFieldError('subject', 'Subject must be at least 3 characters long');
@@ -344,7 +364,7 @@ function validateForm(values) {
     } else {
         clearFieldError('subject');
     }
-    
+
     // Message validation
     if (!values.message || values.message.trim().length < 10) {
         showFieldError('message', 'Message must be at least 10 characters long');
@@ -352,13 +372,13 @@ function validateForm(values) {
     } else {
         clearFieldError('message');
     }
-    
+
     return isValid;
 }
 
 function validateField(field) {
     const value = field.value.trim();
-    
+
     switch (field.name) {
         case 'name':
             if (value.length < 2) {
@@ -386,7 +406,7 @@ function validateField(field) {
             }
             break;
     }
-    
+
     clearFieldError(field.name);
     return true;
 }
@@ -396,13 +416,13 @@ function showFieldError(fieldName, message) {
     if (field) {
         field.classList.add('error');
         field.style.borderColor = '#ef4444';
-        
+
         // Remove existing error message
         const existingError = field.parentNode.querySelector('.error-message');
         if (existingError) {
             existingError.remove();
         }
-        
+
         // Add error message
         const errorDiv = document.createElement('div');
         errorDiv.className = 'error-message';
@@ -419,7 +439,7 @@ function clearFieldError(fieldName) {
     if (field) {
         field.classList.remove('error');
         field.style.borderColor = '';
-        
+
         const errorMessage = field.parentNode.querySelector('.error-message');
         if (errorMessage) {
             errorMessage.remove();
@@ -444,13 +464,13 @@ function showMessage(message, type) {
         transition: transform 0.3s ease;
     `;
     messageDiv.textContent = message;
-    
+
     document.body.appendChild(messageDiv);
-    
+
     setTimeout(() => {
         messageDiv.style.transform = 'translateX(0)';
     }, 100);
-    
+
     setTimeout(() => {
         messageDiv.style.transform = 'translateX(400px)';
         setTimeout(() => {
@@ -462,15 +482,15 @@ function showMessage(message, type) {
 // Particle Animation
 function initializeParticles() {
     createParticles();
-    
+
     // Add mouse move effect
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', function (e) {
         const particles = document.querySelectorAll('.particle');
         particles.forEach((particle, index) => {
             const speed = (index + 1) * 0.02;
             const x = (e.clientX - window.innerWidth / 2) * speed;
             const y = (e.clientY - window.innerHeight / 2) * speed;
-            
+
             particle.style.transform = `translate(${x}px, ${y}px)`;
         });
     });
@@ -490,7 +510,7 @@ function createParticles() {
             z-index: 1;
             overflow: hidden;
         `;
-        
+
         for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
@@ -506,9 +526,9 @@ function createParticles() {
             `;
             particleContainer.appendChild(particle);
         }
-        
+
         document.body.appendChild(particleContainer);
-        
+
         // Add particle animation CSS
         const style = document.createElement('style');
         style.textContent = `
@@ -539,7 +559,7 @@ function createParticles() {
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const parallax = document.querySelectorAll('.hero-bg');
-    
+
     parallax.forEach(element => {
         const speed = 0.3;
         element.style.transform = `translateY(${scrolled * speed}px)`;
@@ -548,11 +568,11 @@ window.addEventListener('scroll', () => {
 
 // Smooth reveal animation for sections
 const revealElements = document.querySelectorAll('section');
-const revealElementOnScroll = function() {
+const revealElementOnScroll = function () {
     revealElements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
-        
+
         if (elementTop < window.innerHeight - elementVisible) {
             element.classList.add('reveal');
         }
@@ -583,41 +603,41 @@ revealStyle.textContent = `
 document.head.appendChild(revealStyle);
 
 // Add interactive button effects
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const buttons = document.querySelectorAll('.btn');
-    
+
     buttons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
+        button.addEventListener('mouseenter', function () {
             if (this.style.transform === '') {
                 this.style.transform = 'translateY(-3px) scale(1.05)';
             }
         });
-        
-        button.addEventListener('mouseleave', function() {
+
+        button.addEventListener('mouseleave', function () {
             this.style.transform = '';
         });
-        
-        button.addEventListener('mousedown', function() {
+
+        button.addEventListener('mousedown', function () {
             this.style.transform = 'translateY(-1px) scale(0.98)';
         });
-        
-        button.addEventListener('mouseup', function() {
+
+        button.addEventListener('mouseup', function () {
             this.style.transform = 'translateY(-3px) scale(1.05)';
         });
     });
 });
 
 // Enhanced project card interactions
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const projectCards = document.querySelectorAll('.project-card');
-    
+
     projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
+        card.addEventListener('mouseenter', function () {
             this.style.transform = 'translateY(-15px) scale(1.02)';
             this.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.15)';
         });
-        
-        card.addEventListener('mouseleave', function() {
+
+        card.addEventListener('mouseleave', function () {
             this.style.transform = '';
             this.style.boxShadow = '';
         });
@@ -625,14 +645,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Initialize reveal on load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     revealElementOnScroll();
 });
 
 // Loading animation
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     document.body.classList.add('loaded');
-    
+
     // Add loading CSS
     const loadingStyle = document.createElement('style');
     loadingStyle.textContent = `
@@ -646,4 +666,5 @@ window.addEventListener('load', function() {
         }
     `;
     document.head.appendChild(loadingStyle);
-}); 
+});
+
